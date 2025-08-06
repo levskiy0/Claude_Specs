@@ -233,6 +233,15 @@ const props = defineProps({
 })
 ```
 
+#### Rules for When Not to Use Composables
+
+- Tightly coupled with DOM elements — e.g., iframe, canvas, video
+- Requires template refs — elements must be accessible from the template
+- Event-driven logic — relies on raw DOM event handlers
+- Component-specific logic — only used in a single component
+- Complex initialization sequence — depends on DOM and logic order
+
+
 ### State Management with Pinia
 
 ```javascript
