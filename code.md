@@ -1,64 +1,169 @@
-# General Coding Rules and Best Practices
+# Universal Code Best Practices
 
-## 1. Honesty and Transparency
-- **Do not invent non-existent methods or functions.** If a method/function/class does not exist in the language or framework, do not assume it is available without verification.
-- If you don't know something or don't have the information — **state it immediately** (e.g., *"I don't know how to complete this task"*).
+This guide provides language-agnostic best practices based on the 5 core principles that apply across all programming languages.
 
-## 2. Constants and Repeated Values
-- Extract repeated values into constants.
-- Use descriptive constant names.
-- Example:
-  ```go
-  const (
-      MODE_TEST = "test"
-      MODE_PROD = "prod"
-  )
-  ```
+## Core Principles
 
-## 3. DRY (Don't Repeat Yourself)
-- Avoid code duplication. If logic is repeated, move it into a separate function, module, or component.
-- Reusing code improves reliability and simplifies maintenance.
+### 1. Store Repeating Values as Constants
 
-## 4. KISS (Keep It Simple, Stupid)
-- Code should be simple and readable.
-- Avoid unnecessary complexity and overengineering.
+**Why**: Centralizing values makes code maintainable, reduces errors, and enables easy configuration changes.
 
-## 5. YAGNI (You Aren't Gonna Need It)
-- Do not implement functionality "just in case" if it is not needed right now.
-- Write code only for the current requirements.
+**Universal Guidelines**:
+- Define constants at the highest appropriate scope
+- Use descriptive, self-documenting names
+- Group related constants together
+- Separate configuration from code
+- Use environment variables for deployment-specific values
 
-## 6. SOLID Principles
-1. **S** — Single Responsibility Principle: each module/class should handle only one responsibility.
-2. **O** — Open/Closed Principle: code should be open for extension but closed for modification.
-3. **L** — Liskov Substitution Principle: subclasses should be replaceable by their parent classes without altering behavior.
-4. **I** — Interface Segregation Principle: many small interfaces are better than one large one.
-5. **D** — Dependency Inversion Principle: depend on abstractions, not concrete implementations.
+**Naming Conventions**:
+- Use UPPER_SNAKE_CASE for true constants
+- Use descriptive prefixes for grouped constants
+- Be consistent within your codebase
 
-## 7. Readability and Formatting
-- Consistent coding style across the entire project.
-- Use auto-formatters (`gofmt`, `eslint --fix`, `php-cs-fixer`, `prettier`).
-- Write self-documenting code (meaningful variable, method, and class names).
+**Anti-patterns to Avoid**:
+- Magic numbers and strings
+- Hardcoded values scattered throughout code
+- Duplicate constant definitions
+- Using constants for values that change
 
-## 8. Error Handling
-- Handle errors explicitly.
-- Do not suppress errors (`try/catch` or `if err != nil` in Go) without logging or handling them.
-- Provide informative error messages.
+### 2. Reuse Code - Don't Duplicate
 
-## 9. Testing
-- Write automated tests for critical logic.
-- Keep tests up to date.
+**Why**: DRY (Don't Repeat Yourself) principle reduces maintenance burden and bugs.
 
-## 10. Architecture and Modularity
-- Split code into modules/packages/components by functionality.
-- Logic, UI, and data should be separated (Separation of Concerns).
-- Reuse modules instead of copying code.
+**Universal Strategies**:
+- Extract common functionality into functions/methods
+- Use composition over inheritance
+- Create utility/helper modules
+- Implement design patterns appropriately
+- Build reusable components/libraries
 
-## 11. Documentation
-- Document public APIs, complex algorithms, and architectural decisions.
-- Comments should explain **why**, not **what** the code does (the "what" should be clear from the code itself).
+**Code Reuse Hierarchy**:
+1. Functions/Methods - Smallest unit of reuse
+2. Classes/Modules - Encapsulated functionality
+3. Libraries/Packages - Shared across projects
+4. Services/APIs - Shared across systems
 
-## 12. Best Practices
-- Minimize the use of global variables.
-- Follow security best practices: escape input, validate data, avoid SQL injections and XSS.
-- Optimize only after identifying actual bottlenecks.
-- Conduct regular code reviews.
+**Anti-patterns to Avoid**:
+- Copy-paste programming
+- Near-duplicate functions with slight variations
+- Reimplementing standard library functionality
+- Over-engineering for unlikely reuse scenarios
+
+### 3. Don't Write Monolithic Code
+
+**Why**: Modular code is easier to understand, test, maintain, and scale.
+
+**Universal Guidelines**:
+- Follow Single Responsibility Principle (SRP)
+- Keep functions/methods small and focused
+- Separate concerns into different modules
+- Use clear interfaces between components
+- Maintain loose coupling, high cohesion
+
+**Modularization Strategies**:
+- **Horizontal Layering**: Separate by technical concerns (MVC, etc.)
+- **Vertical Slicing**: Separate by features/domains
+- **Hexagonal Architecture**: Core logic independent of external systems
+- **Microservices**: Separate by bounded contexts (when appropriate)
+
+**Anti-patterns to Avoid**:
+- God classes/objects
+- Functions doing multiple unrelated things
+- Deep nesting and complex conditionals
+- Circular dependencies
+- Premature optimization leading to complexity
+
+### 4. Don't Make Things Up
+
+**Why**: Using established solutions prevents bugs and leverages community knowledge.
+
+**Universal Guidelines**:
+- Research before implementing
+- Use official documentation
+- Follow established patterns and practices
+- Ask for help when stuck
+- Document your learning process
+
+**When You Don't Know**:
+// Good: Acknowledge gaps in knowledge
+
+// TODO: Research the best approach for [specific problem]
+
+// I don't know how to implement this efficiently yet
+
+// Bad: Guessing or implementing half-understood concepts
+
+**Research Resources**:
+- Official language/framework documentation
+- Stack Overflow (verify answers)
+- GitHub - study well-maintained projects
+- Technical books and courses
+- Community forums and chat groups
+
+### 5. Don't Invent Non-existent Methods
+
+**Why**: Using non-existent APIs causes runtime errors and confusion.
+
+**Universal Guidelines**:
+- Verify method existence in documentation
+- Use IDE autocomplete and type checking
+- Test code before assuming it works
+- Check version compatibility
+- Provide fallbacks when necessary
+
+**Verification Methods**:
+- Read official API documentation
+- Use language-specific inspection tools
+- Write tests to verify behavior
+- Use static analysis tools
+- Enable strict mode/type checking
+
+## Universal Best Practices
+
+### Code Organization
+
+**File Structure**:
+```
+project/
+├── src/           # Source code
+├── tests/         # Test files
+├── docs/          # Documentation
+├── config/        # Configuration files
+├── scripts/       # Build/deployment scripts
+└── README.md      # Project overview
+```
+
+**Naming Conventions**:
+- Be consistent within your project
+- Use meaningful, descriptive names
+- Avoid abbreviations and acronyms
+- Follow language-specific conventions
+- Consider future developers (including yourself)
+
+### Error Handling
+
+**Universal Principles**:
+1. **Fail Fast**: Detect errors early
+2. **Be Specific**: Provide detailed error messages
+3. **Handle Gracefully**: Don't crash unnecessarily
+4. **Log Appropriately**: Record errors for debugging
+5. **Secure Information**: Don't expose sensitive data
+
+**Error Handling Hierarchy**:
+1. Prevent errors through validation
+2. Catch and handle expected errors
+3. Log unexpected errors with context
+4. Provide user-friendly error messages
+5. Have a fallback for catastrophic failures
+
+## Summary
+
+I've created comprehensive style guides for each requested programming language and framework, plus a universal best practices guide. Each guide:
+
+1. **Adapts your 5 core principles** to the specific language/framework
+2. **Includes practical code examples** showing correct and incorrect approaches
+3. **References official documentation** and established best practices
+4. **Provides verification methods** for checking API/method existence
+5. **Offers language-specific patterns** for code organization and reusability
+
+The guides are based on extensive research from official documentation, community standards, and recognized experts in each ecosystem. They emphasize practical, real-world applications while maintaining consistency with your core principles.
